@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server",
     "dev": "nodemon server",
-    "seed": "node utils/seed"
+    "seed": "node utils/seeds"
   },
   "dependencies": {
     "express": "^4.17.1",
