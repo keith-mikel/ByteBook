@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const {getUsers, createUser, getUserById, updateUserById, deleteUserById, removeFriend, addFriend} = require('../../controllers/userController');
+const {
+     getUsers,
+     createUser,
+     getUserById, 
+     updateUserById, 
+     deleteUserById, 
+     removeFriend, 
+     addFriend
+    }  = require('../../controllers/userController');
 
 // Routes for user CRUD operations
 router.route('/').get(getUsers).post(createUser);
