@@ -5,17 +5,15 @@ const {
   getThoughtById,
   createThought,
   updateThoughtById,
-  deleteThoughtById,
+  deleteThought,
   createReaction,
-  findReactionById
 } = require('../../controllers/thoughtController');
 
 // Routes for thought CRUD operations
 router.route('/').get(getAllThoughts).post(createThought);
 router.route('/:thoughtId').get(getThoughtById);
 router.route('/:thoughtId').put(updateThoughtById);
-router.route('/:thoughtId').delete(deleteThoughtById);
+router.route('/:thoughtId').delete(deleteThought);
 router.route('/:thoughtId/reactions').post(createReaction);
-router.route('/reactions/:reactionsId').get(findReactionById);
 
 module.exports = router;

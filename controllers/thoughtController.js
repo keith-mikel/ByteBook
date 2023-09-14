@@ -12,28 +12,6 @@ module.exports = {
     }
   },
 
-  async findReactionById(req, res) {
-    try {
-      // Get the reactionId from the request parameters
-      const { reactionId } = req.params;
-  
-      // Use Mongoose's findById method to find the reaction by its ObjectId
-      const reaction = await Reaction.findById(reactionId);
-  
-      // Check if the reaction exists
-      if (!reaction) {
-        return res.status(404).json({ error: 'Reaction not found' });
-      }
-  
-      // If the reaction exists, return it as JSON response
-      res.json(reaction);
-    } catch (error) {
-      // Handle any errors that occur during the process
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  },
-
   // Get a single thought by _id
   async getThoughtById(req, res) {
     const { thoughtId } = req.params;
@@ -145,29 +123,25 @@ module.exports = {
   },
 
 
-  // Remove a thought by _id
-  async deleteThoughtById(req, res) {
-    const { thoughtId } = req.params;
+  async deleteThought(req, res) {
     try {
-      const thought = await Thought.findById(thoughtId);
-      if (!thought) {
-        return res.status(404).json({ message: 'Thought not found' });
+      // Get the thought ID from the request parameters
+      const { thoughtId } = req.params;
+  
+      // Use Mongoose's findByIdAndDelete method to delete the thought by its ID
+      const deletedThought = await Thought.findByIdAndDelete(thoughtId);
+  
+      // Check if the thought exists and was successfully deleted
+      if (!deletedThought) {
+        return res.status(404).json({ error: 'Thought not found' });
       }
-
-      // Remove the thought's _id from the associated user's thoughts array
-      const user = await User.findById(thought.userId);
-      if (user) {
-        user.thoughts = user.thoughts.filter(
-          (userThoughtId) => userThoughtId.toString() !== thoughtId
-        );
-        await user.save();
-      }
-
-      await thought.remove();
-
+  
+      // If the thought was successfully deleted, return a success message
       res.json({ message: 'Thought deleted successfully' });
-    } catch (err) {
-      res.status(500).json(err);
+    } catch (error) {
+      // Handle any errors that occur during the process
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
     }
   },
 };
