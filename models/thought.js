@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const reactionSchema = new Schema({
- 
+  reactionId: mongoose.Schema.Types.ObjectId, // Define the field as ObjectId
+
   reactionBody: {
     type: String,
     required: true,
